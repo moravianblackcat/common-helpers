@@ -1,9 +1,10 @@
 plugins {
     id 'java'
+    id 'maven-publish'
 }
 
 group = 'cz.dan'
-version = '1.0.3'
+version = '1.0.4'
 
 repositories {
     mavenCentral()
