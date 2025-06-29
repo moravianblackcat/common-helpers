@@ -1,0 +1,1 @@
+Just a collection of helper classes for projects.
