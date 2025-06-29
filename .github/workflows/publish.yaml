@@ -33,6 +33,6 @@ jobs:
 
       - name: Build and publish
         env:
-          ACTOR: ${{ github.actor }}
-          TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ACTOR: ${{ secrets.ACTOR }}
+          TOKEN: ${{ secrets.TOKEN }}
         run: ./gradlew publish
