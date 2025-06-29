@@ -31,15 +31,6 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
-      - name: Check version change
-        id: version_check
-        run: |
-          if git diff HEAD^ HEAD -- build.gradle | grep -q 'version'; then
-            echo "VERSION_CHANGED=true" >> $GITHUB_ENV
-          else
-            echo "VERSION_CHANGED=false" >> $GITHUB_ENV
-          fi
-
       - name: Build and publish
         if: env.VERSION_CHANGED == 'true'
         env:
