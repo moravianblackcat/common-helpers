@@ -4,6 +4,7 @@ import org.awaitility.core.ThrowingRunnable;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.function.Supplier;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
@@ -66,7 +67,7 @@ public final class AwaitHelper {
                 .allMatch(entry -> entryMatch(actualValue, entry));
     }
 
-    private static boolean entryMatch(Map<String, Object> actual, Map.Entry<String, Object> entry) {
+    private static boolean entryMatch(Map<String, Object> actual, Entry<String, Object> entry) {
         Object actualValue = actual.get(entry.getKey());
         Object expectedValue = entry.getValue();
 
