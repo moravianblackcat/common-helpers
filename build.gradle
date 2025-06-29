@@ -1,0 +1,23 @@
+plugins {
+    id 'java'
+}
+
+group = 'cz.dan'
+version = '1.0.0'
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    set('assertjVersion', '3.22.0')
+}
+
+dependencies {
+    implementation "org.assertj:assertj-core:${assertjVersion}"
+    implementation 'org.awaitility:awaitility:4.2.1'
+}
+
+test {
+    useJUnitPlatform()
+}
