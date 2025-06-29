@@ -1,9 +1,49 @@
-name: Publish package
+name: Publish to GitHub Packages
+
 on:
   push:
     branches:
-      - 'main'
+      - main
 
 jobs:
-  call-publish:
-    uses: moravianblackcat/cicd/.github/workflows/publish.yml@main
+  publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'oracle'
+          java-version: 21
+          cache: gradle
+
+      - name: Change wrapper permissions
+        run: chmod +x ./gradlew
+
+      - name: Cache Gradle dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.gradle/caches
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      - name: Check version change
+        id: version_check
+        run: |
+          git fetch origin
+          if git diff origin/main -- build.gradle | grep -q 'version'; then
+            echo "Version changed=true" >> $GITHUB_ENV
+          else
+            echo "Version changed=false" >> $GITHUB_ENV
+          fi
+
+      - name: Build and publish
+        if: env.VERSION_CHANGED == 'true'
+        env:
+          ACTOR: ${{ secrets.ACTOR }}
+          TOKEN: ${{ secrets.TOKEN }}
+        run: ./gradlew publish
