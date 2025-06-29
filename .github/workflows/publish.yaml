@@ -44,6 +44,6 @@ jobs:
       - name: Build and publish
         if: env.VERSION_CHANGED == 'true'
         env:
-          ACTOR: ${{ secrets.ACTOR }}
-          TOKEN: ${{ secrets.TOKEN }}
+          ACTOR: ${{ github.actor }}
+          TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: ./gradlew publish
