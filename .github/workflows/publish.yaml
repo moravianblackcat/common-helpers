@@ -32,7 +32,6 @@ jobs:
             ${{ runner.os }}-gradle-
 
       - name: Build and publish
-        if: env.VERSION_CHANGED == 'true'
         env:
           ACTOR: ${{ github.actor }}
           TOKEN: ${{ secrets.GITHUB_TOKEN }}
