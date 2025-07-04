@@ -33,6 +33,14 @@ public final class AwaitHelper {
         assertInSeconds(timeoutInSeconds, () -> assertThat(noOfRowsSupplier.get()).isNotNull().isZero());
     }
 
+    public static void assertRow(int timeoutInSeconds, Supplier<Map<String, Object>> supplierOfActualRow,
+                                 Map<String, Object> expectedRow) {
+        assertInSeconds(timeoutInSeconds, () -> {
+            Map<String, Object> actualRow = supplierOfActualRow.get();
+            assertThat(actualRow).isNotNull().containsExactlyEntriesOf(expectedRow);
+        });
+    }
+
     public static void assertRows(int timeoutInSeconds, Supplier<List<Map<String, Object>>> supplierOfActualRows,
                                   List<Map<String, Object>> expectedRows) {
         assertInSeconds(timeoutInSeconds, () -> {
